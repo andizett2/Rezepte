@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Projektarbet von Andreas Zipfel
+# Projektarbeit Andreas Zipfel
 Dieses Projekt ist als Abschlussarbeit einer React-Schulung erstellt worden. Die Weiterbildung erfolgte bei alfatraining.de
 
 ## Beschreibung
