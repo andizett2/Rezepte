@@ -66,7 +66,24 @@ recipe
 ├── created_at     <- date
 └── author
 ```
+
+## CouchDB
+Hier sind Anpassungen an der local.ini notwendig, wenn die Instanz lokal läuft:
+```
+[httpd]
+.
+.
+.
+enable cors = true
+[cors]
+
+origins = *
+
+methods = GET,PUT,POST,DELETE,HEAD
+headers = accept, authorization, content-type, origin
+````
 ---
+
 
 
 ## Getting Started ( als Originaltext nach Setup )

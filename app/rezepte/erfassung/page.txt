@@ -1,0 +1,90 @@
+'use client';
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
+
+const RecipeForm = () => {
+
+	const { register, handleSubmit, formState, resetField, setValue } = useForm();
+	const [id, setId] = useState(uuidv4());
+	const [type, setType] = useState('recipe')
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const [steps, setSteps] = useState([]);
+	const [author, setAuthor] = useState('');
+	const [created_at, setCreatedAt] = useState('');
+	const [ingredients, setIngredients] = useState([]);
+	const [lastingredient, setLastingredient] = useState('');
+
+	const submitHandler = (data) => {
+		console.log(data, formState)
+		let aIngredients = Object.entries(data).filter(([key]) => key.startsWith("ingredient")).map(inputs => inputs[1]);
+		if ( data.lastingredient.length ) {
+			aIngredients.push( data.lastingredient );
+		}
+		console.log( aIngredients )
+		setTimeout( () => {
+			setIngredients(aIngredients);
+			resetField( 'lastingredient', {defaultValue: ''});
+			setLastingredient('');
+			if ( aIngredients.length > 1 ) {
+				setValue( `ingredient${aIngredients.length-1}`, aIngredients[aIngredients.length-1])
+			}
+		}, 500)
+	}
+
+	const removeIngredient = (index) => {
+		console.log(index)
+		setIngredients(ingredients.filter((_, i) => i !== index));
+	}
+
+	return (
+		<>
+			<h1>Ihr neues Rezept</h1>
+			<form onSubmit={handleSubmit(submitHandler)} noValidate={true}>
+				<div className="required formrow">
+					<label htmlFor="title">Bezeichnung</label>
+					<input
+						type="text"
+						{...register('title', { required: 'Diese Angabe ist erforderlich ' })}
+					/>
+
+					{formState.errors.title && (
+						<span className="error">{formState.errors.title.message}</span>
+					)}
+				</div>
+				<div className="formrow">
+					<label htmlFor="description">Beschreibung</label>
+					<textarea
+						{...register('description')}
+					/>
+				</div>
+
+				{
+					ingredients.map((i, index) => {
+						return <div className="formrow" key={`ingredient${index}`}>
+							<input
+								{...register(`ingredient${index}`, { required: 'Angabe fehlt' })}
+							/>
+							<button onClick={() => removeIngredient(index)}>entfernen</button>
+							{formState.errors[`ingredient${index}`] && (
+								<span className="error">{formState.errors[`ingredient${index}`].message}</span>
+							)}
+						</div>
+					})
+				}
+				<div className="formrow" key="lastingredient">
+					<input
+						{...register('lastingredient', {
+							required: 'Angabe fehlt'
+						})}
+					/>
+				</div>
+				<button type="submit">Rezept speichern</button>
+			</form>
+		</>
+	)
+}
+
+export default RecipeForm;
