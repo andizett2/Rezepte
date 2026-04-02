@@ -1,0 +1,12 @@
+div.admin-nav {
+	background-color: black;
+	color: white;
+	padding: .3em;
+	margin-top: 10px;
+	text-align:center;
+
+	a {
+		color: white;
+		text-decoration: none;
+	}
+}

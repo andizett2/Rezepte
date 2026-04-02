@@ -1,0 +1,161 @@
+[
+	{
+		"firstname": "Anna",
+		"lastname": "Schmidt",
+		"email": "anna.schmidt@example.com",
+		"password": "geheim",
+		"slogan": "Kreativität ist meine Superkraft!",
+		"isadmin": false
+	},
+	{
+		"firstname": "Max",
+		"lastname": "Müller",
+		"email": "max.mueller@example.com",
+		"password": "geheim",
+		"slogan": "Code ist Poesie.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Lisa",
+		"lastname": "Wagner",
+		"email": "lisa.wagner@example.com",
+		"password": "geheim",
+		"slogan": "Immer einen Schritt voraus.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Tom",
+		"lastname": "Becker",
+		"email": "tommy.becker@example.com",
+		"password": "geheim",
+		"slogan": "Einfach machen!",
+		"isadmin": false
+	},
+	{
+		"firstname": "Sarah",
+		"lastname": "Hoffmann",
+		"email": "sarah.hoffmann@example.com",
+		"password": "geheim",
+		"slogan": "Gemeinsam sind wir stärker.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Jan",
+		"lastname": "Weber",
+		"email": "jan.weber@example.com",
+		"password": "geheim",
+		"slogan": "Technik verbindet Menschen.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Julia",
+		"lastname": "Schulz",
+		"email": "julia.schulz@example.com",
+		"password": "geheim",
+		"slogan": "Lernen ist ein Abenteuer.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Peter",
+		"lastname": "Bauer",
+		"email": "peter.bauer@example.com",
+		"password": "geheim",
+		"slogan": "Qualität vor Quantität.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Laura",
+		"lastname": "Wolf",
+		"email": "laura.wolf@example.com",
+		"password": "geheim",
+		"slogan": "Mutig sein lohnt sich.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Markus",
+		"lastname": "Klein",
+		"email": "markus.klein@example.com",
+		"password": "geheim",
+		"slogan": "Einfachheit ist die höchste Form der Raffinesse.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Nina",
+		"lastname": "Vogel",
+		"email": "nina.vogel@example.com",
+		"password": "geheim",
+		"slogan": "Jeder Tag ist eine neue Chance.",
+		"isadmin": false
+	},
+	{
+		"lastname": "Fischer",
+		"email": "david.fischer@example.com",
+		"password": "geheim",
+		"slogan": "Innovation durch Tradition.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Sophie",
+		"lastname": "Richter",
+		"email": "sophie.richter@example.com",
+		"password": "geheim",
+		"slogan": "Gemeinsam mehr erreichen.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Tim",
+		"lastname": "Hartmann",
+		"email": "tim.hartmann@example.com",
+		"password": "geheim",
+		"slogan": "Technologie mit Verantwortung.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Lea",
+		"lastname": "Schröder",
+		"email": "lea.schroeder@example.com",
+		"password": "geheim",
+		"slogan": "Kreativität kennt keine Grenzen.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Felix",
+		"lastname": "Neumann",
+		"email": "felix.neumann@example.com",
+		"password": "geheim",
+		"slogan": "Wissen ist Macht.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Emma",
+		"lastname": "Braun",
+		"email": "emma.braun@example.com",
+		"password": "geheim",
+		"slogan": "Zusammen sind wir unschlagbar.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Lukas",
+		"lastname": "Schwarz",
+		"email": "lukas.schwarz@example.com",
+		"password": "geheim",
+		"slogan": "Einfach besser.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Mia",
+		"lastname": "Köhler",
+		"email": "mia.koehler@example.com",
+		"password": "geheim",
+		"slogan": "Freude am Detail.",
+		"isadmin": false
+	},
+	{
+		"firstname": "Paul",
+		"lastname": "Gross",
+		"email": "info@example.com",
+		"password": "geheim",
+		"slogan": "Erfolge feiern, Fehler lernen.",
+		"isadmin": true
+	}
+]
