@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
+import { addRecipe } from "@/app/actions";
+/*import { convertMongoDoc } from "@/lib/mongodb";*/
 
 const RecipeForm = () => {
 
@@ -56,7 +58,10 @@ const RecipeForm = () => {
 			steps: steps,
 			ingredients: ingredients.filter(ingredient => ingredient.name.length)
 		}
-		console.log(newRecipe, formState)
+
+		/*const convertedrecipe = convertMongoDoc(newRecipe );*/
+		const result = addRecipe( newRecipe );
+		console.log(result, newRecipe)
 
 	}
 

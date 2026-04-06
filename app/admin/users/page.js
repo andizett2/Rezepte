@@ -1,6 +1,8 @@
+import { getUsers } from "../../actions.js";
+
+// Auflistung aller User
 const AdminUsers = async () => {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/users`, { cache: 'no-store' });
-	const users = await response.json();
+	const users = await getUsers();
 
 	return (
 		<div className="container">

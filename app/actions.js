@@ -1,22 +1,214 @@
 "use server";
 
+// MongoDB
+import { getDb, convertMongoDoc } from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
+import { revalidatePath } from "next/cache";
+
 import { join } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { getRezept_db } from '@/components/db';
 
-// Die User-Objekte werden aus einem JSON-File in die DB geschrieben
-export async function setupUsers( filename ) {
+/*
+ *
+ *
+ *  USER ACTIONS
+ *
+ *
+ */
+
+/**
+ * GET user by email address
+ * @param {string} email
+ * @return {*}
+ */
+export async function getUser(email) {
+	try {
+		const db = await getDb();
+		const user = await db
+			.collection("users")
+			.findOne(
+				{ email: email }
+			);
+
+		if (user) {
+			// stringify the _id
+			user._id = user._id.toString();
+		}
+		return user;
+
+	} catch (error) {
+		console.log("Failed to fetch user:", error);
+	}
+	return null;
+}
+
+/**
+ * GET all users sorted by firstname
+ * @returns {*}
+ */
+export async function getUsers() {
+	try {
+		const db = await getDb();
+		const users = await db.collection("users")
+			.find()
+			.sort({ firstname: 1 })
+			.toArray()
+		return users.map(user => ({ ...user, _id: user._id.toString() }));
+	} catch (e) {
+		console.log("Failed to fetch users", e);
+	}
+}
+
+
+/**
+ * Creates a new user
+ * @param {object} user
+ * @returns {*}
+ */
+export async function addUser(user) {
+	const db = await getDb();
+	const result = await db.collection("users").insertOne(user);
+	revalidatePath("/");
+	return {
+		acknowledged: result.acknowledged,
+		insertedId: result.insertedId.toString()
+	};
+}
+
+/**
+ * Delete a user by the email
+ * @param {string} email
+ * @returns {*}
+ */
+export async function deleteUser(email) {
+	const db = await getDb();
+	const result = await db
+		.collection("users")
+		.findOneAndDelete({ email: email });
+	revalidatePath("/");
+	return {
+		acknowledged: result.ok === 1,
+		deletedCount: result.lastErrorObject?.n || 0,
+		deletedDocument: result.value ? { ...result.value, _id: result.value._id.toString() } : null
+	};
+}
+
+/**
+ * Updates a User by the email
+ * @param {{email: string, firstname?: string, lastname?: string, slogan?: string}} user
+ * @returns {*}
+ */
+export async function updateUser(user) {
+	const db = await getDb();
+	await db
+		.collection("users")
+		.findOneAndUpdate(
+			{ email: user.email },
+			{ $set: {
+				firstname: user.firstname,
+				lastname: user.lastname,
+				slogan: user.slogan
+			}},
+		);
+	revalidatePath("/");
+}
+
+
+/**
+ * Die User-Objekte werden aus einem JSON-File in die DB geschrieben
+ * @param {string} filename
+ * @returns {*}
+ */
+export async function setupUsers(filename) {
 	const data = await readJSONFile(filename);
-	console.log(data);
 	const deleted = data.map(user => deleteUser(user.email));
-	//const db = getRezept_db();
-	//const response = await db.compact();
-	//console.log(response);
-	const results = data.map(user => insertUser(user));
+	const results = data.map(user => addUser(user));
 	return data;
 }
 
-// Einlesen eines JSON-Files aus dem public-Ordner im Filesystem
+/*
+ *
+ *
+ *  RECEIP ACTIONS
+ *
+ *
+ */
+
+/**
+ * GET recipe
+ * @returns
+ */
+export async function getRecipe(id) {
+	try {
+		const db = await getDb();
+		const recipe = await db
+			.collection("recipes")
+			.findOne(
+				{ _id: new ObjectId(id) }
+			);
+		return recipe ? { ...recipe, _id: recipe._id.toString() } : null;
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+/**
+ * GET all recipes
+ * @returns {*}
+ */
+export async function getRecipes() {
+	try {
+		const db = await getDb();
+		const recipes = await db.collection("recipes")
+			.find()
+			.toArray();
+		return recipes.map(recipe => ({ ...recipe, _id: recipe._id.toString() }));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+/**
+ * Creates a new recipe
+ * @param {object} recipe
+ */
+export async function addRecipe(recipe) {
+	const db = await getDb();
+	const result = await db.collection("recipes").insertOne(recipe);
+	revalidatePath("/");
+	return {
+		acknowledged: result.acknowledged,
+		insertedId: result.insertedId.toString()
+	};
+}
+
+/**
+ * Delete a recipe by Id
+ * @param {string} id
+ * @returns {*}
+ */
+export async function deleteRecipe(id) {
+	const db = await getDb();
+	const result = await db.collection("recipes").deleteOne({
+		_id: new ObjectId(id),
+	});
+	revalidatePath("/");
+	return {
+		acknowledged: result.acknowledged,
+		deletedCount: result.deletedCount
+	};
+}
+
+/*
+ *
+ * HELPERS
+ *
+ */
+
+/**
+ * Einlesen eines JSON-Files aus dem public-Ordner im Filesystem
+ * @param filename
+ */
 async function readJSONFile(filename) {
 	const filepath = join(process.cwd(), 'public', filename);
 	const file = await readFile(filepath)
@@ -24,48 +216,3 @@ async function readJSONFile(filename) {
 
 	return data
 };
-
-async function deleteUser(id) {
-	const db = getRezept_db();
-
-	try {
-		const doc = await db.get(id);
-		if ( doc ) {
-			const response = await db.destroy(doc.email, doc._rev);
-			console.log( 'Dokument gelöscht', id);
-		} else {
-			console.log( 'Dokument nicht gefunden', id);
-		}
-	} catch ( error ) {
-		console.log( 'Fehler beim Abrufen des Users' + error);
-	}
-
-}
-
-// Ein User in die DB schreiben
-async function insertUser(user) {
-	const db = getRezept_db();
-	const { firstname, lastname = '', email, password, isadmin = false, slogan = '' } = user;
-
-	const userDoc = {
-		_id: email,
-		type: 'user',
-		firstname,
-		lastname,
-		email,
-		password,
-		isadmin,
-		created_at: new Date().toISOString(),
-		slogan,
-	};
-
-	try {
-		const response = await db.insert(userDoc);
-		console.log(response);
-		return response;
-	} catch (error) {
-		return {
-			error: 'Fehler beim Erstellen des Users' + error
-		};
-	}
-}

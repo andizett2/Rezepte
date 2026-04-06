@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import Link from "next/link";
 import "./login.css";
+import { getUser } from "../actions.js";
+
 
 const Login = () => {
 	// Weiterleitung nach erfolgreicher Anmeldung
@@ -16,13 +18,6 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
-
-	// Ein User-Objekt für die E-Mail suchen
-	const getUser = async (email) => {
-		const response = await fetch(`/api/users/${email}`);
-		const user = await response.json();
-		return user;
-	}
 
 	// Anmeldeversuch starten
 	const submitHandler = async (e) => {

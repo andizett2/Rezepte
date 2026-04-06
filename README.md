@@ -11,7 +11,7 @@ Es sollen möglichst viele gelernte Inhalte ausprobiert und eingesetzt werden k�
 
 ## Technologie
 Die Website ist als Nextjs-Projekt erstellt. Da Benutzerdaten und Bilder persistent abgelegt werden müssen, bietet das Framework die besten Möglichkeiten.
-Für die Datenhaltung wird eine lokale CouchDB-Instanz genutzt.
+Für die Datenhaltung wird eine MongoDB von Atlas genutzt.
 Bilder werden im public-Ordner abgelegt.
 
 ## Aufbau und Inhalte der Website
@@ -67,23 +67,11 @@ recipe
 └── author
 ```
 
-## CouchDB
-Hier sind Anpassungen an der local.ini notwendig, wenn die Instanz lokal läuft:
-```
-[httpd]
-.
-.
-.
-enable cors = true
-[cors]
+## MongoDB
+Es wird das Paket mongodb genutzt.
 
-origins = *
-
-methods = GET,PUT,POST,DELETE,HEAD
-headers = accept, authorization, content-type, origin
-````
----
-
+Nebst dem Admin-User ist ein Test-User eingerichtet (siehe .env)
+Für das Hosting bei Atlas wird die kostenlose Variante genutzt.
 
 
 ## Getting Started ( als Originaltext nach Setup )

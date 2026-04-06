@@ -4,6 +4,7 @@ import { useStore } from "@/store";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import "../login/login.css";
+import { getUser, addUser } from "@/app/actions";
 
 const Register = () => {
 	const router = useRouter();
@@ -17,34 +18,17 @@ const Register = () => {
 	const [passwordrepeat, setPasswordRepeat] = useState("");
 	const [error, setError] = useState("");
 
-	// Ein User-Objekt für die E-Mail suchen
-	const getUser = async (email) => {
-		const response = await fetch(`/api/users/${email}`);
-		const user = await response.json();
-		return user;
-	}
 
 	// Ein User-Objekt hinzufügen
 	const storeUser = async (user) => {
-		const response = await fetch('/api/users', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-		});
-
-		if (response.ok) {
-			const data = await response.json();
-			return data;
-		}
+		return await addUser(user)
 	}
 
 	// Formular wird gesendet
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		e.preventDefault();
 
-		const user = getUser(email);
+		const user = await getUser(email);
 
 		if (user) {
 			setError("Benutzer existiert bereits!");
