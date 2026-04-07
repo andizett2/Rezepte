@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { addRecipe } from "@/app/actions";
@@ -10,9 +10,16 @@ import { useRouter } from 'next/navigation';
 
 const RecipeForm = () => {
 	const currentLocale = useStore((state) => state.locale);
-	const currentUser = useStore( (state)=>state.currentUser.email);
+	const currentUser = useStore( (state)=>state.currentUser?.email);
 	const units = getUnits(currentLocale);
 	const router = useRouter();
+
+	// Schutz: Umleitung zu Login, wenn nicht angemeldet
+	useEffect(() => {
+		if (!currentUser) {
+			router.push('/login');
+		}
+	}, [currentUser, router]);
 
 	const { register, handleSubmit, formState, resetField, setValue } = useForm();
 	const [id, setId] = useState(uuidv4());

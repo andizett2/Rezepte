@@ -72,7 +72,6 @@ export async function addUser(user) {
 	user.password = hashedPassword;
 	const db = await getDb();
 	const result = await db.collection("users").insertOne(user);
-	revalidatePath("/");
 	return {
 		acknowledged: result.acknowledged,
 		insertedId: result.insertedId.toString()
@@ -89,7 +88,6 @@ export async function deleteUser(email) {
 	const result = await db
 		.collection("users")
 		.findOneAndDelete({ email: email });
-	revalidatePath("/");
 	return {
 		acknowledged: result.ok === 1,
 		deletedCount: result.lastErrorObject?.n || 0,
@@ -116,7 +114,6 @@ export async function updateUser(user) {
 				}
 			},
 		);
-	revalidatePath("/");
 }
 
 /**
@@ -191,7 +188,6 @@ export async function getRecipes() {
 export async function addRecipe(recipe) {
 	const db = await getDb();
 	const result = await db.collection("recipes").insertOne(recipe);
-	revalidatePath("/");
 	return {
 		acknowledged: result.acknowledged,
 		insertedId: result.insertedId.toString()
@@ -208,7 +204,6 @@ export async function deleteRecipe(id) {
 	const result = await db.collection("recipes").deleteOne({
 		_id: new ObjectId(id),
 	});
-	revalidatePath("/");
 	return {
 		acknowledged: result.acknowledged,
 		deletedCount: result.deletedCount
