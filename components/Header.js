@@ -77,7 +77,7 @@ export default function Header() {
 							{/* Anmelden/Abmelden – erscheint im mobilen Menü ganz unten */}
 							<li>
 								<Link
-									href={currentUser ? '/logout' : '/login'}
+									href={currentUser ? '/logoff' : '/login'}
 									className="btn-auth"
 								>
 									{currentUser ? 'Abmelden' : 'Anmelden'}
