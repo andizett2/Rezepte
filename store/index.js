@@ -7,4 +7,8 @@ export const useStore = create((set, get) => ({
 	setCurrentUser: (user) => {
 		set({ currentUser: user });
 	},
+	locale: "de",
+	setLocale: (locale) => {
+		set({locale: locale})
+	}
 }));

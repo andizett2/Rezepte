@@ -4,9 +4,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { addRecipe } from "@/app/actions";
-/*import { convertMongoDoc } from "@/lib/mongodb";*/
+import { useStore } from "@/store";
+import { getUnits } from "@/lib/lookups";
 
 const RecipeForm = () => {
+	const currentLocale = useStore((state) => state.locale);
+	const units = getUnits(currentLocale);
 
 	const { register, handleSubmit, formState, resetField, setValue } = useForm();
 	const [id, setId] = useState(uuidv4());
@@ -25,7 +28,7 @@ const RecipeForm = () => {
 
 		// Füge ein neues leeres Feld hinzu, wenn das letzte Feld ausgefüllt wird
 		if (index === ingredients.length - 1 && value.trim() !== '') {
-			setIngredients([...newIngredients, { amount: 1, unit: 0, name: '' }]);
+			setIngredients([...newIngredients, { amount: 1, unit: units[0].id, name: '' }]);
 		}
 	};
 
@@ -60,7 +63,7 @@ const RecipeForm = () => {
 		}
 
 		/*const convertedrecipe = convertMongoDoc(newRecipe );*/
-		const result = addRecipe( newRecipe );
+		const result = addRecipe(newRecipe);
 		console.log(result, newRecipe)
 
 	}
@@ -116,8 +119,9 @@ const RecipeForm = () => {
 								style={{ width: '30%', padding: '8px', boxSizing: 'border-box' }}
 
 							>
-								<option value="0">Stück</option>
-								<option value="1">TL</option>
+								{
+									units.map((unit, ix) => <option key={unit.id} value={unit.id}>{unit.value}</option>)
+								}
 							</select>
 							<input
 								type="text"
