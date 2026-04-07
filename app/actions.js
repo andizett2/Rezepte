@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 
 import { join } from 'node:path';
 import { readFile } from 'node:fs/promises';
+import { hashPassword, comparePasswords } from '@/lib/auth';
 
 /*
  *
@@ -66,6 +67,9 @@ export async function getUsers() {
  * @returns {*}
  */
 export async function addUser(user) {
+	// password stored as a hash
+	const hashedPassword = await hashPassword(user.password);
+	user.password = hashedPassword;
 	const db = await getDb();
 	const result = await db.collection("users").insertOne(user);
 	revalidatePath("/");
@@ -104,15 +108,27 @@ export async function updateUser(user) {
 		.collection("users")
 		.findOneAndUpdate(
 			{ email: user.email },
-			{ $set: {
-				firstname: user.firstname,
-				lastname: user.lastname,
-				slogan: user.slogan
-			}},
+			{
+				$set: {
+					firstname: user.firstname,
+					lastname: user.lastname,
+					slogan: user.slogan
+				}
+			},
 		);
 	revalidatePath("/");
 }
 
+/**
+ * Prüft Autorisierung anhand Passwort
+ * @param {*} plainPassword
+ * @param {*} hashedPassword
+ * @returns
+ */
+export async function userIsAuthorized(user, password) {
+	const isAuthorized = await comparePasswords(password, user.password);
+	return isAuthorized;
+}
 
 /**
  * Die User-Objekte werden aus einem JSON-File in die DB geschrieben

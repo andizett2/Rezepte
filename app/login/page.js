@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import Link from "next/link";
 import "./login.css";
-import { getUser } from "../actions.js";
+import { getUser, userIsAuthorized } from "../actions.js";
 
 
 const Login = () => {
@@ -26,12 +26,13 @@ const Login = () => {
 		// ToDo: neuen Endpunkt nutzen, da sonst das Passwort des Users übermittelt wird
 		// Versuch diesen User zu finden
 		const user = await getUser(email);
+		const isAuthorized = await userIsAuthorized(user, password);
 
 		// Passwort Prüfung
 		if (user) {
 			if (user.error) {
 				setError(user.error);
-			} else if (user.password === password) {
+			} else if (isAuthorized) {
 				setCurrentUser(user);
 				setError("");
 				console.log("Login erfolgreich!");
