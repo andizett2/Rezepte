@@ -16,7 +16,6 @@ export default async function Rezepte() {
 				recipes.map( recipe => <li key={recipe._id}><Link href={`/rezepte/${recipe._id}`}>{recipe.title}</Link></li>)
 			}
 			</ul>
-			<Link href="/rezepte/erfassung">Neues Rezept erstellen</Link>
 		</>
 
 	);

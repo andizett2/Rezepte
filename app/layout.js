@@ -1,9 +1,11 @@
+import '@/styles/globals.css';
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css"; // Importiere die globale CSS-Datei
 import LoginButton from "../components/LoginButton";
 import AdminNav from "../components/AdminNav";
 import Image from "next/image";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -25,28 +27,16 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
 			<body className="flex flex-col min-h-screen"> {/* Flexbox für Sticky Footer */}
-				<header>
-					<nav>
-						<div className="logo">
-							<Link href="/"><Image src="/logo_kfn.png" alt="Kochrezepte" width={120} height={120}/></Link> {/* Logo als Link zur Startseite */}
-						</div>
-						<ul className="main-nav">
-							<li><Link href="/rezepte">Rezepte</Link></li>
-							<li><Link href="/kategorien">Kategorien</Link></li>
-							<li><Link href="/kontakt">Kontakt</Link></li>
-						</ul>
-						<LoginButton />
-					</nav>
-					<AdminNav/>
-				</header>
+				<Header isLoggedIn={true} />
+
 				<main className="flex-grow"> {/* Nimmt den verfügbaren Platz ein */}
 					{children}
 				</main>
-				<footer>
-					<p>&copy; 2026 Kochrezepte für ProgrammiererInnen. Alle Rechte vorbehalten.</p>
+				<footer className="footer">
 					<div className="footer-links">
 						<Link href="/impressum">Impressum</Link>
 						<Link href="/ueber-mich">Über mich</Link>
+						<p className="footer-link"><small>&copy;2026 Kochen für Nerds. Alle Rechte vorbehalten.</small></p>
 					</div>
 				</footer>
 			</body>

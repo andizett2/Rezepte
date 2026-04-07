@@ -16,7 +16,9 @@ const RecipeDetail = async ({ params }) => {
 	return (
 		<>
 			<h1>{recipe.title}</h1>
-			<small>Eingereich von {user.firstname} {user.lastname} am {new Date(recipe.dtCreated).toLocaleDateString()}</small>
+			{ user &&
+				<small>Eingereich von {user.firstname} {user.lastname} am {new Date(recipe.dtCreated).toLocaleDateString()}</small>
+			}
 			<p>{recipe.description}</p>
 			<h2>Zutaten</h2>
 			<ul>

@@ -1,8 +1,8 @@
 /* Globale CSS-Variablen */
 :root {
-	--primary-color: #FF6B6B;
+	--primary-color: #c0392b;
 	/* Ein lebhaftes Rot */
-	--secondary-color: #4ECDC4;
+	--secondary-color: #2c1a0e;
 	/* Ein frisches Türkis */
 	--accent-color: #FFD166;
 	/* Ein warmer Gelbton */
@@ -19,7 +19,7 @@
 
 /* Grundlegende Resets und Schriftarten */
 html,
-body {
+xbody {
 	padding: 0;
 	margin: 0;
 	font-family: var(--font-geist-sans), sans-serif;
@@ -40,21 +40,27 @@ h4,
 h5,
 h6 {
 	font-family: var(--font-geist-mono), monospace;
-	/* Nutzt die konfigurierte Geist Mono für Überschriften */
 	color: var(--primary-color);
-	margin-bottom: 0.5em;
+	margin-bottom: 0.3em;
+	margin-top:1em;
+}
+h1 {
+	margin-top:0
 }
 
-a {
-	color: var(--secondary-color);
-	text-decoration: none;
-	transition: color 0.3s ease, transform 0.2s ease;
-}
 
-a:hover {
-	color: var(--primary-color);
-	transform: translateY(-2px);
-}
+/**
+	a {
+		color: var(--secondary-color);
+		text-decoration: none;
+		transition: color 0.3s ease, transform 0.2s ease;
+	}
+
+	a:hover {
+		color: var(--primary-color);
+		transform: translateY(-2px);
+	}
+*/
 
 /* Layout-Container */
 .container {
@@ -67,6 +73,7 @@ a:hover {
 .flex-grow {
 	flex-grow: 1;
 	margin: auto;
+	min-width:80vw;
 }
 
 /* Header Styling */
@@ -131,8 +138,10 @@ header nav {
 
 /* Footer Styling */
 footer {
-	background-color: var(--background-dark);
-	color: var(--light-text-color);
+	/**
+		background-color: var(--background-dark);
+		color: var(--light-text-color);
+	*/
 	padding: 20px 0;
 	text-align: center;
 	box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
@@ -141,7 +150,9 @@ footer {
 }
 
 .footer-links a {
-	color: var(--secondary-color);
+	/**
+		color: var(--secondary-color);
+	*/
 	margin: 0 10px;
 }
 

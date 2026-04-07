@@ -1,0 +1,878 @@
+/* ============================================================
+   globals.css â€“ Kochrezepte
+   Aesthetic: Warm Editorial â€“ wie ein gut gestaltetes Kochbuch
+   ============================================================ */
+
+/* ---------- Google Fonts Import ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+	/* Farben */
+	--color-bg: #faf7f2;
+	/* warmes Elfenbein */
+	--color-surface: #ffffff;
+	--color-surface-alt: #f2ece1;
+	/* helles Terrakotta-Beige */
+
+	--color-primary: #c0392b;
+	/* tief-warmes Rot (Paprika) */
+	--color-primary-hover: #a93226;
+	--color-accent: #e67e22;
+	/* Kürbis-Orange */
+	--color-accent-light: #fdebd0;
+
+	--color-text: #2c1a0e;
+	/* dunkelbraun statt schwarz */
+	--color-text-muted: #7a6552;
+	--color-border: #e0d5c5;
+
+	/* Typografie */
+	--font-display: 'Playfair Display', Georgia, serif;
+	--font-body: 'DM Sans', sans-serif;
+
+	/* AbstÃ¤nde */
+	--spacing-xs: 0.25rem;
+	--spacing-sm: 0.5rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 2.5rem;
+	--spacing-2xl: 4rem;
+
+	/* Layout */
+	--max-width: 1200px;
+	--header-height: 72px;
+	--subnav-height: 44px;
+
+	/* Effekte */
+	--radius-sm: 6px;
+	--radius-md: 12px;
+	--radius-lg: 20px;
+	--shadow-sm: 0 2px 8px rgba(44, 26, 14, 0.08);
+	--shadow-md: 0 6px 24px rgba(44, 26, 14, 0.12);
+	--shadow-lg: 0 16px 48px rgba(44, 26, 14, 0.16);
+	--transition: 0.22s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+	font-size: 16px;
+}
+
+body {
+	font-family: var(--font-body);
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	line-height: 1.65;
+	-webkit-font-smoothing: antialiased;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+/* ---------- Typography ---------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-display);
+	line-height: 1.2;
+	color: var(--color-text);
+}
+
+h1 {
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-weight: 700;
+}
+
+h2 {
+	font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+	font-weight: 700;
+}
+
+h3 {
+	font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+	font-weight: 400;
+}
+
+p {
+	font-size: 1rem;
+	color: var(--color-text-muted);
+	max-width: 65ch;
+}
+
+/* ---------- Layout Utility ---------- */
+.container {
+	width: 100%;
+	max-width: var(--max-width);
+	margin: 0 auto;
+	padding: 0 var(--spacing-lg);
+}
+
+main {
+	flex: 1;
+	padding-top: var(--spacing-2xl);
+	padding-bottom: var(--spacing-2xl);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background-color: var(--color-surface);
+	border-bottom: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	height: var(--header-height);
+}
+
+.header__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	gap: var(--spacing-lg);
+}
+
+/* Logo */
+.header__logo {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-sm);
+	text-decoration: none;
+}
+
+.header__logo img {
+	height: 120px;
+	width: auto;
+	object-fit: contain;
+	margin-top: 20px;
+}
+
+.header__logo-text {
+	font-family: var(--font-display);
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: var(--color-primary);
+	letter-spacing: -0.01em;
+}
+
+/* Primäre Navigation */
+.nav-primary {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	gap: var(--spacing-xl);
+}
+
+.nav-primary__list {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-lg);
+}
+
+.nav-primary__link {
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: var(--color-text-muted);
+	letter-spacing: 0.02em;
+	position: relative;
+	padding-bottom: 3px;
+	transition: color var(--transition);
+}
+
+.nav-primary__link::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background-color: var(--color-primary);
+	border-radius: 2px;
+	transition: width var(--transition);
+}
+
+.nav-primary__link:hover,
+.nav-primary__link.active {
+	color: var(--color-primary);
+}
+
+.nav-primary__link:hover::after,
+.nav-primary__link.active::after {
+	width: 100%;
+}
+
+/* Anmelden / Abmelden Button */
+.btn-auth {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-xs);
+	padding: 0.45rem 1.1rem;
+	border-radius: var(--radius-sm);
+	font-family: var(--font-body);
+	font-size: 0.9rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color var(--transition), color var(--transition), transform var(--transition);
+	border: 2px solid var(--color-primary);
+	background-color: transparent;
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+.btn-auth:hover {
+	background-color: var(--color-primary);
+	color: var(--color-surface);
+	transform: translateY(-1px);
+}
+
+/* ============================================================
+   SEKUNDÃ„RE NAVIGATION (nur wenn eingeloggt)
+   ============================================================ */
+.nav-secondary {
+	display: block;
+	background-color: var(--color-surface-alt);
+	border-bottom: 1px solid var(--color-border);
+	height: var(--subnav-height);
+	position: sticky;
+	top: var(--header-height);
+	z-index: 99;
+}
+
+.nav-secondary__inner {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	gap: var(--spacing-sm);
+}
+
+.nav-secondary__list {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-xs);
+	height: 100%;
+	margin-left: 100px;
+}
+
+.nav-secondary__item {
+	display: none;
+}
+
+.nav-secondary__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	height: 100%;
+	padding: 0 var(--spacing-md);
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--color-text-muted);
+	border-bottom: 2px solid transparent;
+	transition: color var(--transition), border-color var(--transition), background-color var(--transition);
+	white-space: nowrap;
+}
+
+.nav-secondary__link:hover {
+	color: var(--color-primary);
+	background-color: rgba(192, 57, 43, 0.06);
+}
+
+.nav-secondary__link.active {
+	color: var(--color-primary);
+	border-bottom-color: var(--color-primary);
+	font-weight: 600;
+}
+
+.nav-secondary__link svg,
+.nav-secondary__link .icon {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+/* Badge (z.B. fÃ¼r Anzahl eigener Rezepte) */
+.nav-secondary__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--color-accent);
+	color: white;
+	font-size: 0.7rem;
+	font-weight: 700;
+	border-radius: 999px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+}
+
+/* ============================================================
+   HERO-SEKTION (Startseite)
+   ============================================================ */
+.hero {
+	text-align: center;
+	padding: var(--spacing-2xl) 0;
+	position: relative;
+}
+
+.hero::before {
+	content: '';
+	position: absolute;
+	top: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 600px;
+	height: 600px;
+	background: radial-gradient(circle, var(--color-accent-light) 0%, transparent 70%);
+	pointer-events: none;
+	z-index: -1;
+}
+
+.hero__eyebrow {
+	display: inline-block;
+	font-size: 0.8rem;
+	font-weight: 500;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--color-accent);
+	background-color: var(--color-accent-light);
+	padding: 0.3rem 0.85rem;
+	border-radius: 999px;
+	margin-bottom: var(--spacing-md);
+}
+
+.hero__title {
+	margin-bottom: var(--spacing-md);
+}
+
+.hero__title em {
+	font-style: italic;
+	color: var(--color-primary);
+}
+
+.hero__subtitle {
+	font-size: 1.1rem;
+	color: var(--color-text-muted);
+	margin: 0 auto var(--spacing-xl);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-sm);
+	padding: 0.7rem 1.6rem;
+	border-radius: var(--radius-sm);
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+	font-weight: 500;
+	cursor: pointer;
+	border: none;
+	transition: all var(--transition);
+	text-decoration: none;
+}
+
+.btn--primary {
+	background-color: var(--color-primary);
+	color: var(--color-surface);
+}
+
+.btn--primary:hover {
+	background-color: var(--color-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+	background-color: transparent;
+	color: var(--color-primary);
+	border: 2px solid var(--color-primary);
+}
+
+.btn--secondary:hover {
+	background-color: var(--color-primary);
+	color: var(--color-surface);
+	transform: translateY(-2px);
+}
+
+.btn--ghost {
+	background-color: var(--color-surface-alt);
+	color: var(--color-text);
+}
+
+.btn--ghost:hover {
+	background-color: var(--color-border);
+}
+
+/* ============================================================
+   KARTEN (Rezeptkarten)
+   ============================================================ */
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: var(--spacing-lg);
+}
+
+.card {
+	background-color: var(--color-surface);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	border: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	transition: transform var(--transition), box-shadow var(--transition);
+	display: flex;
+	flex-direction: column;
+}
+
+.card:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--shadow-md);
+}
+
+.card__image-wrapper {
+	position: relative;
+	aspect-ratio: 4/3;
+	overflow: hidden;
+	background-color: var(--color-surface-alt);
+}
+
+.card__image-wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s ease;
+}
+
+.card:hover .card__image-wrapper img {
+	transform: scale(1.05);
+}
+
+.card__category {
+	position: absolute;
+	top: var(--spacing-sm);
+	left: var(--spacing-sm);
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	background-color: var(--color-primary);
+	color: white;
+	padding: 0.25rem 0.6rem;
+	border-radius: var(--radius-sm);
+}
+
+.card__body {
+	padding: var(--spacing-md) var(--spacing-lg);
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.card__title {
+	font-family: var(--font-display);
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin-bottom: var(--spacing-xs);
+	color: var(--color-text);
+	transition: color var(--transition);
+}
+
+.card:hover .card__title {
+	color: var(--color-primary);
+}
+
+.card__meta {
+	display: flex;
+	gap: var(--spacing-md);
+	font-size: 0.82rem;
+	color: var(--color-text-muted);
+	margin-top: auto;
+	padding-top: var(--spacing-sm);
+	border-top: 1px solid var(--color-border);
+}
+
+.card__meta-item {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+/* ============================================================
+   FORMULAR-ELEMENTE
+   ============================================================ */
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-xs);
+	margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+	font-size: 0.88rem;
+	font-weight: 500;
+	color: var(--color-text);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+	width: 100%;
+	padding: 0.65rem 0.9rem;
+	border: 1.5px solid var(--color-border);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-surface);
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+	color: var(--color-text);
+	transition: border-color var(--transition), box-shadow var(--transition);
+	outline: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+}
+
+.form-textarea {
+	resize: vertical;
+	min-height: 120px;
+}
+
+/* ============================================================
+   PAGE-HEADER (SeitenÃ¼berschriften)
+   ============================================================ */
+.page-header {
+	margin-bottom: var(--spacing-xl);
+	padding-bottom: var(--spacing-lg);
+	border-bottom: 2px solid var(--color-border);
+}
+
+.page-header__title {
+	margin-bottom: var(--spacing-xs);
+}
+
+.page-header__subtitle {
+	font-size: 1rem;
+	color: var(--color-text-muted);
+}
+
+/* Dekorative Linie unter Heading */
+.page-header__title span {
+	position: relative;
+}
+
+.page-header__title span::after {
+	content: '';
+	position: absolute;
+	bottom: -4px;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+	border-radius: 2px;
+}
+
+/* ============================================================
+   KATEGORIEN-GRID
+   ============================================================ */
+.category-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	gap: var(--spacing-md);
+}
+
+.category-card {
+	background-color: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	padding: var(--spacing-lg);
+	text-align: center;
+	cursor: pointer;
+	transition: all var(--transition);
+	text-decoration: none;
+	color: var(--color-text);
+}
+
+.category-card:hover {
+	background-color: var(--color-primary);
+	color: white;
+	border-color: var(--color-primary);
+	transform: translateY(-3px);
+	box-shadow: var(--shadow-md);
+}
+
+.category-card__icon {
+	font-size: 2rem;
+	margin-bottom: var(--spacing-sm);
+	display: block;
+}
+
+.category-card__name {
+	font-family: var(--font-display);
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+	background-color: var(--color-text-muted);
+	color: var(--color-text);
+	padding: var(--spacing-xl) 0 var(--spacing-lg);
+	margin-top: auto;
+}
+
+.footer p {
+	color: var(--color-text)
+}
+
+.footer__inner {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-md);
+}
+
+.footer__top {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	gap: var(--spacing-lg);
+	padding-bottom: var(--spacing-lg);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer__brand {
+	font-family: var(--font-display);
+	font-size: 1.2rem;
+	color: white;
+	font-weight: 700;
+}
+
+.footer__tagline {
+	font-size: 0.85rem;
+	margin-top: 4px;
+	color: rgba(255, 255, 255, 0.5);
+	max-width: none;
+}
+
+.footer__links {
+	display: flex;
+	gap: var(--spacing-lg);
+	flex-wrap: wrap;
+}
+
+.footer__link {
+	font-size: 0.85rem;
+	color: rgba(--color-text);
+	text-decoration: none;
+	transition: color var(--transition);
+}
+
+.footer__link:hover {
+	color: white;
+}
+
+.footer__copy {
+	font-size: 0.8rem;
+	color: rgba(255, 255, 255, 0.4);
+	text-align: center;
+	max-width: none;
+}
+
+/* ============================================================
+   ALERT / FEEDBACK MESSAGES
+   ============================================================ */
+.alert {
+	padding: var(--spacing-md) var(--spacing-lg);
+	border-radius: var(--radius-sm);
+	font-size: 0.9rem;
+	border-left: 4px solid;
+	margin-bottom: var(--spacing-md);
+}
+
+.alert--success {
+	background-color: #eafaf1;
+	border-color: #27ae60;
+	color: #1e8449;
+}
+
+.alert--error {
+	background-color: #fdedec;
+	border-color: var(--color-primary);
+	color: var(--color-primary-hover);
+}
+
+.alert--info {
+	background-color: #eaf2fb;
+	border-color: #2980b9;
+	color: #1a6090;
+}
+
+/* ============================================================
+   HAMBURGER MENU (Mobile)
+   ============================================================ */
+.hamburger {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	width: 36px;
+	height: 36px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 4px;
+}
+
+.hamburger__line {
+	display: block;
+	width: 100%;
+	height: 2px;
+	background-color: var(--color-text);
+	border-radius: 2px;
+	transition: all var(--transition);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+	:root {
+		--spacing-2xl: 2.5rem;
+	}
+
+	.hamburger {
+		display: flex;
+	}
+
+	/* Mobile: primÃ¤re Navigation als Dropdown */
+	.nav-primary__list {
+		display: none;
+		position: absolute;
+		top: var(--header-height);
+		left: 0;
+		right: 0;
+		background-color: var(--color-surface);
+		flex-direction: column;
+		align-items: flex-start;
+		padding: var(--spacing-md) var(--spacing-lg);
+		gap: var(--spacing-md);
+		border-bottom: 1px solid var(--color-border);
+		box-shadow: var(--shadow-md);
+	}
+
+	.nav-primary__list.is-open {
+		display: flex;
+	}
+
+	.nav-primary__link {
+		font-size: 1rem;
+		padding: var(--spacing-xs) 0;
+	}
+
+	/* Mobile: sekundÃ¤re Navigation scrollbar */
+	.nav-secondary {
+		display: none;
+	}
+
+	.nav-secondary__inner {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+
+	.nav-secondary__inner::-webkit-scrollbar {
+		display: none;
+	}
+
+	.nav-secondary__item {
+		display: list-item;
+	}
+
+	.nav-secondary__list {
+		flex-wrap: nowrap;
+		padding-right: var(--spacing-md);
+	}
+
+	.card-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.category-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.footer__top {
+		flex-direction: column;
+		gap: var(--spacing-md);
+	}
+}
+
+/* Hamburger â†’ X Animation */
+.hamburger.is-open .hamburger__line:nth-child(1) {
+	transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.is-open .hamburger__line:nth-child(2) {
+	opacity: 0;
+	transform: scaleX(0);
+}
+
+.hamburger.is-open .hamburger__line:nth-child(3) {
+	transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+
+	/* btn-auth in die mobile Liste einbauen */
+	.nav-primary__list .btn-auth {
+		display: inline-flex;
+		margin-top: var(--spacing-xs);
+	}
+}
+
+@media (max-width: 480px) {
+	.hero {
+		padding: var(--spacing-xl) 0;
+	}
+
+	/* Desktop btn-auth ausblenden â€“ erscheint im mobilen MenÃ¼ */
+	.header__inner>.nav-primary>.btn-auth {
+		display: none;
+	}
+}
