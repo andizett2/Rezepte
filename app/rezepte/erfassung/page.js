@@ -6,10 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { addRecipe } from "@/app/actions";
 import { useStore } from "@/store";
 import { getUnits } from "@/lib/lookups";
+import { useRouter } from 'next/navigation';
 
 const RecipeForm = () => {
 	const currentLocale = useStore((state) => state.locale);
+	const currentUser = useStore( (state)=>state.currentUser.email);
 	const units = getUnits(currentLocale);
+	const router = useRouter();
 
 	const { register, handleSubmit, formState, resetField, setValue } = useForm();
 	const [id, setId] = useState(uuidv4());
@@ -17,7 +20,7 @@ const RecipeForm = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [steps, setSteps] = useState(['']);
-	const [author, setAuthor] = useState('');
+	const [author, setAuthor] = useState(currentUser);
 	const [created_at, setCreatedAt] = useState('');
 	const [ingredients, setIngredients] = useState([{ amount: 1, unit: 0, name: '' }]);
 
@@ -58,13 +61,14 @@ const RecipeForm = () => {
 	const submitHandler = (data) => {
 		const newRecipe = {
 			...data,
+			author: author,
 			steps: steps,
-			ingredients: ingredients.filter(ingredient => ingredient.name.length)
+			ingredients: ingredients.filter(ingredient => ingredient.name.length),
+			dtCreated: new Date().toISOString()
 		}
 
-		/*const convertedrecipe = convertMongoDoc(newRecipe );*/
 		const result = addRecipe(newRecipe);
-		console.log(result, newRecipe)
+		result.then( value => router.push("/rezepte/" + value.insertedId) );
 
 	}
 

@@ -4,5 +4,6 @@
 	"unit_kg": "kg",
 	"unit_ts": "Teelöffel",
 	"unit_ml": "ml",
-	"unit_l": "Liter"
+	"unit_l": "Liter",
+	"unit_slice": "Scheibe"
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import "./globals.css"; // Importiere die globale CSS-Datei
 import LoginButton from "../components/LoginButton";
 import AdminNav from "../components/AdminNav";
+import Image from "next/image";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -27,7 +28,7 @@ export default function RootLayout({ children }) {
 				<header>
 					<nav>
 						<div className="logo">
-							<Link href="/">Kochrezepte</Link> {/* Logo als Link zur Startseite */}
+							<Link href="/"><Image src="/logo_kfn.png" alt="Kochrezepte" width={120} height={120}/></Link> {/* Logo als Link zur Startseite */}
 						</div>
 						<ul className="main-nav">
 							<li><Link href="/rezepte">Rezepte</Link></li>
