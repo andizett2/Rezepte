@@ -2,6 +2,9 @@ import { getRecipe } from "@/app/actions";
 import { useStore } from "@/store";
 import { getUnits, getUnit } from "@/lib/lookups";
 import { getUser } from "@/app/actions";
+import Image from "next/image";
+
+import './page.css';
 
 const RecipeDetail = async ({ params }) => {
 
@@ -20,6 +23,9 @@ const RecipeDetail = async ({ params }) => {
 				<small>Eingereich von {user.firstname} {user.lastname} am {new Date(recipe.dtCreated).toLocaleDateString()}</small>
 			}
 			<p>{recipe.description}</p>
+			{
+				recipe.image_url && <Image src={recipe.image_url} className="recipe-image" width="500" height="500" alt="" />
+			}
 			<h2>Zutaten</h2>
 			<ul>
 				{

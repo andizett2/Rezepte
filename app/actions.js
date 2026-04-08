@@ -9,6 +9,24 @@ import { join } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { hashPassword, comparePasswords } from '@/lib/auth';
 
+import { put } from "@vercel/blob";
+
+/**
+ * Rezeptbild hochladen
+ * @param {string} name enthält die ID des Rezepts
+ * @param {*} file binäre Daten
+ */
+export async function uploadRecipeImage( name, file ) {
+const { url } = await put(
+		`recipes/${name}`,
+		file,
+		{
+			access: 'public',
+			addRandomSuffix: true
+		});
+	return url;
+}
+
 /*
  *
  *
@@ -167,13 +185,16 @@ export async function getRecipe(id) {
 
 /**
  * GET all recipes
+ * @param {object}
  * @returns {*}
  */
-export async function getRecipes() {
+export async function getRecipes(options={ filter:{}, sort:{'dtCreated': -1}, limit:100}) {
+	const {filter, sort, limit} = options;
+	console.log(filter, sort, limit)
 	try {
 		const db = await getDb();
 		const recipes = await db.collection("recipes")
-			.find()
+			.find(filter, { sort, limit })
 			.toArray();
 		return recipes.map(recipe => ({ ...recipe, _id: recipe._id.toString() }));
 	} catch (e) {

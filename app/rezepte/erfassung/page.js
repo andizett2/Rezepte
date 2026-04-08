@@ -1,4 +1,5 @@
 'use client';
+import './page.css';
 
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,10 +8,12 @@ import { addRecipe } from "@/app/actions";
 import { useStore } from "@/store";
 import { getUnits } from "@/lib/lookups";
 import { useRouter } from 'next/navigation';
+import { uploadRecipeImage } from "@/app/actions";
+
 
 const RecipeForm = () => {
 	const currentLocale = useStore((state) => state.locale);
-	const currentUser = useStore( (state)=>state.currentUser?.email);
+	const currentUser = useStore((state) => state.currentUser?.email);
 	const units = getUnits(currentLocale);
 	const router = useRouter();
 
@@ -30,6 +33,7 @@ const RecipeForm = () => {
 	const [author, setAuthor] = useState(currentUser);
 	const [created_at, setCreatedAt] = useState('');
 	const [ingredients, setIngredients] = useState([{ amount: 1, unit: 0, name: '' }]);
+	const [image_url, setImageUrl] = useState('');
 
 	const handleIngredientChange = (index, value) => {
 		const newIngredients = [...ingredients];
@@ -65,19 +69,37 @@ const RecipeForm = () => {
 		}
 	};
 
-	const submitHandler = (data) => {
-		const newRecipe = {
-			...data,
-			author: author,
-			steps: steps,
-			ingredients: ingredients.filter(ingredient => ingredient.name.length),
-			dtCreated: new Date().toISOString()
+	const submitHandler = async (data) => {
+		try {
+			let imageUrl = '';
+
+			// Upload image if provided
+			if (data.image && data.image[0]) {
+				const formData = new FormData();
+				formData.append('image', data.image[0]);
+				console.log(formData)
+				imageUrl = await uploadRecipeImage(data.image[0].name, data.image[0]);
+				setImageUrl(imageUrl);
+			}
+
+			const newRecipe = {
+				...data,
+				image_url: imageUrl,
+				author: author,
+				steps: steps,
+				ingredients: ingredients.filter(ingredient => ingredient.name.length),
+				dtCreated: new Date().toISOString()
+			};
+
+			const result = await addRecipe(newRecipe);
+			setTimeout(() => {
+				router.push("/rezepte/" + result.insertedId);
+			}, 5000)
+		} catch (error) {
+			console.error('Failed to create recipe:', error);
+			// Hier könntest du eine Fehlermeldung anzeigen
 		}
-
-		const result = addRecipe(newRecipe);
-		result.then( value => router.push("/rezepte/" + value.insertedId) );
-
-	}
+	};
 
 	const removeIngredient = (index) => {
 		console.log(index)
@@ -87,7 +109,19 @@ const RecipeForm = () => {
 	return (
 		<>
 			<h1>Ihr neues Rezept</h1>
-			<form onSubmit={handleSubmit(submitHandler)} noValidate={true}>
+			<form encType="multipart/form-data" onSubmit={handleSubmit(submitHandler)} noValidate={true}>
+				<div className="formrow">
+					<label htmlFor="image" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+						Bild (optional)
+					</label>
+					<input
+						type="file"
+						id="image"
+						accept="image/*"
+						{...register('image')}
+					/>
+					{ image_url && <img src={image_url} alt="" className="upload-preview" />}
+				</div>
 				<div className="required formrow">
 					<label htmlFor="title" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
 						Bezeichnung

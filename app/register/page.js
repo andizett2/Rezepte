@@ -6,6 +6,7 @@ import { useState } from "react";
 import "../login/login.css";
 import { getUser, addUser } from "@/app/actions";
 
+
 const Register = () => {
 	const router = useRouter();
 	const setCurrentUser = useStore((state) => state.setCurrentUser);
