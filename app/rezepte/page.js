@@ -7,7 +7,6 @@ import RecipeListItem from "@/components/RecipeListItem";
 export default async function Rezepte() {
 
 	const recipes = await getRecipes();
-	console.log(recipes)
 
 	return (
 		<>

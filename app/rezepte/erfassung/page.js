@@ -77,7 +77,6 @@ const RecipeForm = () => {
 			if (data.image && data.image[0]) {
 				const formData = new FormData();
 				formData.append('image', data.image[0]);
-				console.log(formData)
 				imageUrl = await uploadRecipeImage(data.image[0].name, data.image[0]);
 				setImageUrl(imageUrl);
 			}
@@ -102,13 +101,12 @@ const RecipeForm = () => {
 	};
 
 	const removeIngredient = (index) => {
-		console.log(index)
 		setIngredients(ingredients.filter((_, i) => i !== index));
 	}
 
 	return (
 		<>
-			<h1>Ihr neues Rezept</h1>
+			<h1>Dein neues Rezept</h1>
 			<form encType="multipart/form-data" onSubmit={handleSubmit(submitHandler)} noValidate={true}>
 				<div className="formrow">
 					<label htmlFor="image" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>

@@ -190,7 +190,7 @@ export async function getRecipe(id) {
  */
 export async function getRecipes(options={ filter:{}, sort:{'dtCreated': -1}, limit:100}) {
 	const {filter, sort, limit} = options;
-	console.log(filter, sort, limit)
+
 	try {
 		const db = await getDb();
 		const recipes = await db.collection("recipes")
