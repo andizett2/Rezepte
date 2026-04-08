@@ -1,8 +1,8 @@
 /* Globale CSS-Variablen */
 :root {
-	--primary-color: #FF6B6B;
+	--primary-color: #c0392b;
 	/* Ein lebhaftes Rot */
-	--secondary-color: #4ECDC4;
+	--secondary-color: #2c1a0e;
 	/* Ein frisches Türkis */
 	--accent-color: #FFD166;
 	/* Ein warmer Gelbton */
@@ -17,22 +17,6 @@
 	--box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
-/* Grundlegende Resets und Schriftarten */
-html,
-body {
-	padding: 0;
-	margin: 0;
-	font-family: var(--font-geist-sans), sans-serif;
-	/* Nutzt die konfigurierte Geist Sans */
-	color: var(--text-color);
-	background-color: var(--background-light);
-	line-height: 1.6;
-	/* Flexbox-Setup für den Sticky Footer */
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
-
 h1,
 h2,
 h3,
@@ -40,129 +24,17 @@ h4,
 h5,
 h6 {
 	font-family: var(--font-geist-mono), monospace;
-	/* Nutzt die konfigurierte Geist Mono für Überschriften */
 	color: var(--primary-color);
-	margin-bottom: 0.5em;
+	margin-bottom: 0.3em;
+	margin-top:1em;
 }
-
-a {
-	color: var(--secondary-color);
-	text-decoration: none;
-	transition: color 0.3s ease, transform 0.2s ease;
-}
-
-a:hover {
-	color: var(--primary-color);
-	transform: translateY(-2px);
-}
-
-/* Layout-Container */
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 20px;
+h1 {
+	margin-top:0
 }
 
 /* Sorgt dafür, dass der Hauptinhalt den verfügbaren Platz füllt */
 .flex-grow {
 	flex-grow: 1;
 	margin: auto;
-}
-
-/* Header Styling */
-header {
-	background-color: var(--background-dark);
-	color: var(--light-text-color);
-	padding: 15px 0 0 0;
-	box-shadow: var(--box-shadow-light);
-}
-
-header nav {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 20px;
-}
-
-.logo a {
-	font-size: 1.8em;
-	font-weight: bold;
-	color: var(--accent-color);
-	text-decoration: none;
-}
-
-.main-nav {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	display: flex;
-	gap: 25px;
-}
-
-.main-nav a {
-	color: var(--light-text-color);
-	font-weight: 500;
-	padding: 8px 15px;
-	border-radius: var(--border-radius-sm);
-	transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.main-nav a:hover {
-	background-color: rgba(255, 255, 255, 0.15);
-	color: var(--accent-color);
-}
-
-.login-button {
-	background-color: var(--primary-color);
-	color: var(--light-text-color);
-	padding: 10px 20px;
-	border-radius: var(--border-radius-md);
-	font-weight: bold;
-	transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.login-button:hover {
-	background-color: #FF4B4B;
-	/* Etwas dunkleres Rot */
-	box-shadow: var(--box-shadow-hover);
-}
-
-/* Footer Styling */
-footer {
-	background-color: var(--background-dark);
-	color: var(--light-text-color);
-	padding: 20px 0;
-	text-align: center;
-	box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
-	margin-top: auto;
-	/* Wichtig für Sticky Footer */
-}
-
-.footer-links a {
-	color: var(--secondary-color);
-	margin: 0 10px;
-}
-
-.footer-links a:hover {
-	color: var(--accent-color);
-}
-
-/* Responsive Anpassungen */
-@media (max-width: 768px) {
-	header nav {
-		flex-direction: column;
-		gap: 15px;
-	}
-
-	.main-nav {
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	.main-nav a {
-		width: 100%;
-		text-align: center;
-	}
+	min-width:80vw;
 }
