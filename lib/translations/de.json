@@ -5,5 +5,9 @@
 	"unit_ts": "Teelöffel",
 	"unit_ml": "ml",
 	"unit_l": "Liter",
-	"unit_slice": "Scheibe"
+	"unit_slice": "Scheibe",
+	"unit_cup": "Tasse",
+	"unit_spoon": "Löffel",
+	"unit_bag": "Tüte",
+	"unit_pack": "Packung"
 }

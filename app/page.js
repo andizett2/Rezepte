@@ -3,6 +3,7 @@
 import { useStore } from "@/store";
 import Link from "next/link";
 import { getRecipes } from "@/app/actions";
+import { getUser } from "@/app/actions";
 import { useState, useEffect } from "react";
 import RecipeCard from "@/components/RecipeCard";
 
@@ -13,12 +14,24 @@ export default function Home() {
 
 
 	useEffect(() => {
-		getRecipes({ filter: {image_url:{$exists:true,$ne:''}}, limit: 3, sort: { 'dtCreated': -1} }).then(result => { setMostRecent(result); console.log(result) })
+		getRecipes({
+			filter: { image_url: { $exists: true, $ne: '' } },
+			limit: 3,
+			sort: { 'dtCreated': -1 }
+		})
+			.then(result => {
+				setMostRecent(result);
+			})
 	}, []);
 
 	return (
 		<>
 			<div className="container">
+				<cite>
+					Es ist 2 Uhr nachts und plötzlich knurrt dein Magen
+					<br />
+					so laut, dass es durch die Kopfhörer dringt.
+				</cite>
 				<section className="hero">
 					<div className="container">
 						<span className="hero__eyebrow">
