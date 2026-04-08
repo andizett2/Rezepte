@@ -6,6 +6,7 @@ import { useState } from "react";
 import "../login/login.css";
 import { getUser, addUser } from "@/app/actions";
 
+
 const Register = () => {
 	const router = useRouter();
 	const setCurrentUser = useStore((state) => state.setCurrentUser);
@@ -41,7 +42,6 @@ const Register = () => {
 				setError("Dein Account wurde erstellt.");
 				const newUser = { id: email, firstname: firstname, lastname:lastname, email: email, password:password, isadmin: false, slogan: '' };
 				const result = storeUser( newUser );
-				console.log(result);
 				setCurrentUser(newUser);
 				console.log("Registrierung erfolgreich!");
 				setTimeout(() => {

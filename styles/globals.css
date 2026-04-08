@@ -174,7 +174,7 @@ main {
 	height: 120px;
 	width: auto;
 	object-fit: contain;
-	margin-top: 20px;
+	margin-top: 35px;
 }
 
 .header__logo-text {
@@ -338,6 +338,12 @@ main {
 /* ============================================================
    HERO-SEKTION (Startseite)
    ============================================================ */
+cite{
+	text-align: center;
+	margin: 0 auto;
+	display: block;
+}
+
 .hero {
 	text-align: center;
 	padding: var(--spacing-2xl) 0;
@@ -433,6 +439,35 @@ main {
 
 .btn--ghost:hover {
 	background-color: var(--color-border);
+}
+
+/* File Input Styling */
+input[type="file"] {
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+}
+
+input[type="file"]::file-selector-button {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-sm);
+	padding: 0.7rem 1.6rem;
+	margin-right: 1rem;
+	border-radius: var(--radius-sm);
+	background-color: var(--color-primary);
+	color: var(--color-surface);
+	font-family: var(--font-body);
+	font-size: 0.95rem;
+	font-weight: 500;
+	border: none;
+	cursor: pointer;
+	transition: all var(--transition);
+}
+
+input[type="file"]::file-selector-button:hover {
+	background-color: var(--color-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
 }
 
 /* ============================================================
