@@ -359,13 +359,13 @@ main {
 
 .hero__eyebrow {
 	display: inline-block;
-	font-size: 0.8rem;
-	font-weight: 500;
+	font-size: 1.2rem;
+	font-weight: 700;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	color: var(--color-accent);
 	background-color: var(--color-accent-light);
-	padding: 0.3rem 0.85rem;
+	padding: 0.4rem 0.85rem;
 	border-radius: 999px;
 	margin-bottom: var(--spacing-md);
 }

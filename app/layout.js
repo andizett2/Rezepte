@@ -6,6 +6,7 @@ import LoginButton from "../components/LoginButton";
 import AdminNav from "../components/AdminNav";
 import Image from "next/image";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -32,13 +33,7 @@ export default function RootLayout({ children }) {
 				<main className="flex-grow"> {/* Nimmt den verfügbaren Platz ein */}
 					{children}
 				</main>
-				<footer className="footer">
-					<div className="footer-links">
-						<Link href="/impressum">Impressum</Link>
-						<Link href="/ueber-mich">Über mich</Link>
-						<p className="footer-link"><small>&copy;2026 Kochen für Nerds. Alle Rechte vorbehalten.</small></p>
-					</div>
-				</footer>
+				<Footer/>
 			</body>
 		</html>
 	);
