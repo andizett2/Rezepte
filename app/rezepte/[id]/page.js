@@ -3,7 +3,7 @@ import { useStore } from "@/store";
 import { getUnits, getUnit } from "@/lib/lookups";
 import { getUser } from "@/app/actions";
 import Image from "next/image";
-
+import Ingredients from "@/components/Ingredients";
 import './page.css';
 
 const RecipeDetail = async ({ params }) => {
@@ -13,8 +13,8 @@ const RecipeDetail = async ({ params }) => {
 	const recipe = await getRecipe(id);
 	const user = await getUser( recipe.author )
 	const currentLocale = "de";
-
 	const units = getUnits(currentLocale);
+
 
 	return (
 		<>
@@ -26,12 +26,10 @@ const RecipeDetail = async ({ params }) => {
 			{
 				recipe.image_url && <Image src={recipe.image_url} className="recipe-image" width="500" height="500" alt="" />
 			}
-			<h2>Zutaten</h2>
-			<ul>
-				{
-					recipe.ingredients.map((i, ix) => <li key={ix}>{i.amount} {getUnit(i.unit, currentLocale).value} {i.name}</li>)
-				}
-			</ul>
+			{/* Die Zutatenliste soll die Menge anhand der Personen errechnen */}
+			{
+				recipe && <Ingredients recipe={recipe} units={units} />
+			}
 			<h2>Zubereitung</h2>
 			<ul>
 				{
