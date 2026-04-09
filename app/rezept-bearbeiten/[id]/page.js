@@ -1,5 +1,5 @@
 'use client';
-import './page.css';
+import '@/app/rezepte/erfassung/page.css';
 
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,32 +7,59 @@ import { v4 as uuidv4 } from 'uuid';
 import { addRecipe } from "@/app/actions";
 import { useStore } from "@/store";
 import { getUnits } from "@/lib/lookups";
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { uploadRecipeImage } from "@/app/actions";
+import { getRecipe, updateRecipe } from '@/app/actions';
+import Image from 'next/image';
+import Link from 'next/link';
 
 
-const RecipeForm = () => {
+const RecipeEdit = () => {
+
+	const params = useParams();
+	const router = useRouter();
+
 	const currentLocale = useStore((state) => state.locale);
 	const currentUser = useStore((state) => state.currentUser?.email);
 	const units = getUnits(currentLocale);
-	const router = useRouter();
 
-	// Schutz: Umleitung zu Login, wenn nicht angemeldet
-	useEffect(() => {
-		if (!currentUser) {
-			router.push('/login');
-		}
-	}, [currentUser, router]);
-
-	const { register, handleSubmit, formState, resetField, setValue } = useForm();
-	const [id, setId] = useState(uuidv4());
+	const { register, handleSubmit, formState, resetField, setValue, reset } = useForm();
+	const [id, setId] = useState(params.id);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [steps, setSteps] = useState(['']);
 	const [author, setAuthor] = useState(currentUser);
 	const [created_at, setCreatedAt] = useState('');
-	const [ingredients, setIngredients] = useState([{ amount: 1, unit: 0, name: '' }]);
+	const [ingredients, setIngredients] = useState([]);
 	const [image_url, setImageUrl] = useState('');
+
+
+	// Schutz: Umleitung zu Login, wenn nicht angemeldet
+	useEffect(() => {
+		if (!currentUser) {
+			router.push('/login');
+		} else {
+			// Rezept laden und im Formular anzeigen
+			getRecipe(id)
+				.then(result => {
+					setTitle(result.title);
+					setDescription(result.description);
+					setAuthor(result.author || currentUser.email);
+					// Immer eine Leerzeile einfügen
+					setIngredients([...result.ingredients, { amount: 1, unit: 0, name: '' }]);
+					setSteps(result.steps);
+					setImageUrl(result.image_url);
+					// Formular mit allen Daten zurücksetzen
+					reset({
+						title: result.title,
+						description: result.description,
+						author: result.author || currentUser,
+						// ingredients und steps sind hier nicht Teil des Formulars,
+						// da sie in separaten States verwaltet werden
+					});
+				})
+		}
+	}, [currentUser, router, id, reset]);
 
 	const handleIngredientChange = (index, value) => {
 		const newIngredients = [...ingredients];
@@ -70,9 +97,9 @@ const RecipeForm = () => {
 
 	const submitHandler = async (data) => {
 		try {
-			let imageUrl = '';
+			let imageUrl = image_url;
 
-			// Upload image if provided
+			// Bild ggf. hochladen und URL setzen
 			if (data.image && data.image[0]) {
 				const formData = new FormData();
 				formData.append('image', data.image[0]);
@@ -80,8 +107,9 @@ const RecipeForm = () => {
 				setImageUrl(imageUrl);
 			}
 
-			const newRecipe = {
+			const updatedRecipe = {
 				...data,
+				_id: id,
 				image_url: imageUrl,
 				author: author,
 				steps: steps,
@@ -89,9 +117,10 @@ const RecipeForm = () => {
 				dtCreated: new Date().toISOString()
 			};
 
-			const result = await addRecipe(newRecipe);
+			// Daten aktualisieren und zur Detailansicht wechseln
+			const result = await updateRecipe(updatedRecipe);
 			setTimeout(() => {
-				router.push("/rezepte/" + result.insertedId);
+				router.push("/rezepte/" + id);
 			}, 1000)
 		} catch (error) {
 			console.error('Failed to create recipe:', error);
@@ -109,15 +138,16 @@ const RecipeForm = () => {
 			<form encType="multipart/form-data" onSubmit={handleSubmit(submitHandler)} noValidate={true}>
 				<div className="formrow">
 					<label htmlFor="image" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-						Bild (optional)
+						{`Bild ${image_url ? 'ersetzen' : '(optional)'}`}
 					</label>
+
 					<input
 						type="file"
 						id="image"
 						accept="image/*"
 						{...register('image')}
 					/>
-					{ image_url && <img src={image_url} alt="" className="upload-preview" />}
+					{image_url && <img src={image_url} alt="" className="upload-preview" />}
 				</div>
 				<div className="required formrow">
 					<label htmlFor="title" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
@@ -194,21 +224,23 @@ const RecipeForm = () => {
 				</div>
 
 				<button
+					className="btn"
 					type="submit"
 					style={{
 						backgroundColor: '#4CAF50',
 						color: 'white',
-						padding: '10px 15px',
+						padding: '15px 15px',
 						border: 'none',
 						borderRadius: '4px',
 						cursor: 'pointer',
 					}}
 				>
-					Rezept speichern
+					Rezept aktualisieren
 				</button>
+				<Link className="btn btn--primary" href="/meine-rezepte" style={{float:"right"}}>Abbrechen</Link>
 			</form>
 		</>
 	)
 }
 
-export default RecipeForm;
+export default RecipeEdit;
