@@ -5,6 +5,7 @@ import Link from "next/link";
 import './RecipeListItem.css';
 import { useRouter } from 'next/navigation';
 import { deleteRecipe } from '@/app/actions';
+import { truncateText } from "@/lib/string";
 
 const RecipeListItem = ({ recipe, user, onDelete }) => {
 	const router = useRouter();
@@ -61,7 +62,10 @@ const RecipeListItem = ({ recipe, user, onDelete }) => {
 			</Link>
 
 			<div className="recipe-link">
-				<Link href={`/rezepte/${recipe._id}`}>{recipe.title}</Link>
+				<Link href={`/rezepte/${recipe._id}`}>
+					{recipe.title}
+					<p>{truncateText(recipe.description, 50)}</p>
+				</Link>
 			</div>
 		</div>
 	);
