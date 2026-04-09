@@ -216,6 +216,28 @@ export async function addRecipe(recipe) {
 }
 
 /**
+ * Update a recipe by its _id
+ * @param {object} recipe
+ * @returns {*}
+ */
+export async function updateRecipe(recipe) {
+	const db = await getDb();
+	const { _id, ...updateFields } = recipe;
+	if (!_id) {
+		throw new Error('Recipe _id is required for update');
+	}
+	const result = await db.collection("recipes").findOneAndUpdate(
+		{ _id: new ObjectId(_id) },
+		{ $set: updateFields },
+		{ returnDocument: 'after' }
+	);
+	return {
+		acknowledged: result.ok === 1,
+		value: result.value ? { ...result.value, _id: result.value._id.toString() } : null
+	};
+}
+
+/**
  * Delete a recipe by Id
  * @param {string} id
  * @returns {*}
