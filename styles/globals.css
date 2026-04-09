@@ -139,6 +139,8 @@ main {
 	flex: 1;
 	padding-top: var(--spacing-2xl);
 	padding-bottom: var(--spacing-2xl);
+	padding-left: 1em;
+	padding-right: 1em;
 }
 
 /* ============================================================

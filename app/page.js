@@ -46,9 +46,9 @@ export default function Home() {
 						<a href="/rezepte" className="btn btn--primary">Alle Rezepte</a>
 					</div>
 				</section>
-				<ul>
+				<ul style={{maxWidth:"500px", margin:"auto"}}>
 					{
-						mostRecent.map(recipe => <li key={recipe._id}>
+						mostRecent.map(recipe => <li key={recipe._id} style={{marginBottom:"1rem"}}>
 							<RecipeCard recipe={recipe} />
 						</li>)
 					}
