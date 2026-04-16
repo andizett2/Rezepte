@@ -6,7 +6,7 @@ const RecipeCard = ( {recipe, user} ) => {
 		<>
 			<a href={'/rezepte/' + recipe._id} className="card">
 				<div className="card__image-wrapper">
-					<Image src={recipe.image_url} width="1200" height="1200" alt={recipe.title} />
+					<Image src={recipe.image_url} width="1200" height="1200" alt={recipe.title} loading="eager" />
 				</div>
 				<div className="card__body">
 					<h3 className="card__title">{recipe.title}</h3>

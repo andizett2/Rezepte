@@ -57,7 +57,7 @@ const RecipeListItem = ({ recipe, user, onDelete }) => {
 
 			<Link href={`/rezepte/${recipe._id}`} className="recipe-thumbnail-link">
 				<div className="recipe-thumbnail">
-					{recipe.image_url && <Image alt={recipe.title || 'Recipe image'} width="100" height="100" src={recipe.image_url} />}
+					{recipe.image_url && <Image alt={recipe.title || 'Recipe image'} width="100" height="100" src={recipe.image_url} loading="eager"/>}
 				</div>
 			</Link>
 

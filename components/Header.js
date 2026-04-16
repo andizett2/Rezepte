@@ -14,13 +14,16 @@ export default function Header() {
 	const currentUser = useStore(state => state.currentUser);
 	const isAdmin = currentUser && currentUser.isadmin;
 
-	const [menuOpen, setMenuOpen] = useState(false);
+	// menuOpen wird beim Pfadwechsel automatisch zurückgesetzt,
+	// weil pathname als Key im State-Initializer wirkt.
 	const pathname = usePathname();
+	const [menuOpen, setMenuOpen] = useState(false);
+	const [lastPathname, setLastPathname] = useState(pathname);
 
-	// Menü schließen wenn sich die Route ändert (z.B. nach Link-Klick)
-	useEffect(() => {
+	if (pathname !== lastPathname) {
+		setLastPathname(pathname);
 		setMenuOpen(false);
-	}, [pathname]);
+	}
 
 	// Scrollen des Body sperren wenn Menü offen ist
 	useEffect(() => {

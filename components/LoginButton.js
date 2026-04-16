@@ -1,10 +1,11 @@
 'use client';
-import { useStore } from "@/store";
+import { useSession } from "next-auth/react";
 import Link from 'next/link';
 
 const UserNav = () => {
 
-	const user = useStore((state) => state.currentUser);
+	const { data: session } = useSession();
+	const user = session?.user;
 
 	return (
 		<>
