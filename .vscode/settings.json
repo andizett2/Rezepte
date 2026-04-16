@@ -1,3 +1,9 @@
 {
-	"svn.ignoreMissingSvnWarning": true
+	"svn.ignoreMissingSvnWarning": true,
+	"workbench.colorCustomizations": {
+		"statusBar.background": "#e87722",
+		"statusBar.foreground": "#ffffff",
+		"statusBar.debuggingBackground": "#e87722",
+		"statusBar.noFolderBackground": "#e87722"
+	}
 }

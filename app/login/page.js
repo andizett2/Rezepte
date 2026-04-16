@@ -4,8 +4,8 @@ import { useStore } from "@/store";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import "./login.css";
-import { getUser, userIsAuthorized } from "../actions.js";
 
 
 const Login = () => {
@@ -19,32 +19,27 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 
-	// Anmeldeversuch starten
+	// Anmeldeversuch über next-auth starten
 	const submitHandler = async (e) => {
 		e.preventDefault();
 
-		// ToDo: neuen Endpunkt nutzen, da sonst das Passwort des Users übermittelt wird
-		// Versuch diesen User zu finden
-		const user = await getUser(email);
-		const isAuthorized = await userIsAuthorized(user, password);
+		// signIn("credentials") sendet E-Mail und Passwort NUR serverseitig an den
+		// authorize()-Callback in route.js – das Passwort verlässt nie den Server.
+		const result = await signIn("credentials", {
+			email,
+			password,
+			redirect: false,   // Fehler selbst behandeln, nicht automatisch weiterleiten
+		});
 
-		// Passwort Prüfung
-		if (user) {
-			if (user.error) {
-				setError(user.error);
-			} else if (isAuthorized) {
-				setCurrentUser(user);
-				setError("");
-				console.log("Login erfolgreich!");
-				router.push('/');
-			} else {
-				setError("Falsches Passwort!");
-			}
+		if (result?.ok) {
+			setCurrentUser({ email });   // Zustand Store aktualisieren
+			setError("");
+			router.push("/");
 		} else {
-			setError("Benutzer nicht gefunden!");
+			setError("E-Mail oder Passwort falsch.");
 		}
+	};
 
-	}
 	return (
 		<>
 			<div className="login-container">
