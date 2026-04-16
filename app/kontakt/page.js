@@ -64,14 +64,14 @@ export default function Kontakt() {
 					</ul>
 				</div>
 
-				<p className="tip">💡 <strong>Tipp:</strong> Falls du ein Rezept einreichen möchtest, nutze am besten unser <a href="#contact-form"><strong>Rezept-Formular</strong></a> oder schick uns eine E-Mail mit:
+				<div className="tip">💡 <strong>Tipp:</strong> Falls du ein Rezept einreichen möchtest, nutze am besten unser <a href="#contact-form"><strong>Rezept-Formular</strong></a> oder schick uns eine E-Mail mit:
 					<ul>
 						<li>Titel des Rezepts</li>
 						<li>Zutatenliste</li>
 						<li>Zubereitungsschritten</li>
 						<li>Optional: Einem Foto des Gerichts</li>
 					</ul>
-				</p>
+				</div>
 
 				<p>Wir freuen uns auf deine kreativen Ideen! 🍳💻</p>
 
