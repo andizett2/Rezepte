@@ -43,7 +43,7 @@ export default function Home() {
 						<p className="hero__subtitle">
 							Einfach kochen, besser essen – mit unserer wachsenden Rezeptsammlung.
 						</p>
-						<a href="/rezepte" className="btn btn--primary">Alle Rezepte</a>
+						<Link href="/rezepte" className="btn btn--primary">Alle Rezepte</Link>
 					</div>
 				</section>
 				<ul style={{maxWidth:"500px", margin:"auto"}}>

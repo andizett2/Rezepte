@@ -9,10 +9,10 @@ const Logoff = () => {
 	const setCurrentUser = useStore((state) => state.setCurrentUser);
 
 	useEffect(() => {
-		// signOut() löscht den Session-Cookie und leitet danach auf / weiter.
-		// Das Zustand-Store-Reset passiert davor synchron.
-		setCurrentUser(null);
 		const timer = setTimeout(() => {
+			// Zustand-Store zurücksetzen
+			setCurrentUser(null);
+			// next-auth Session-Cookie löschen und auf Startseite weiterleiten
 			signOut({ callbackUrl: "/" });
 		}, 2000);
 
@@ -25,6 +25,6 @@ const Logoff = () => {
 			<p>Weiterleitung erfolgt in 2 Sekunden auf die <Link href="/">Startseite.</Link></p>
 		</>
 	);
-};
+}
 
 export default Logoff;
