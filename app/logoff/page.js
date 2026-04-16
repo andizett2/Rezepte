@@ -1,24 +1,23 @@
 'use client'
+import { signOut } from "next-auth/react";
 import { useStore } from "@/store";
-import { useRouter } from 'next/navigation';
 import { useEffect } from "react";
 import Link from "next/link";
 
 const Logoff = () => {
 
-	const router = useRouter();
 	const setCurrentUser = useStore((state) => state.setCurrentUser);
 
-	// useEffect stellt sicher, dass der Code erst nach dem Mount im Browser läuft,
-	// nicht während des Static-Pre-Renderings beim Build.
 	useEffect(() => {
 		const timer = setTimeout(() => {
+			// Zustand-Store zurücksetzen
 			setCurrentUser(null);
-			router.push('/');
+			// next-auth Session-Cookie löschen und auf Startseite weiterleiten
+			signOut({ callbackUrl: "/" });
 		}, 2000);
 
 		return () => clearTimeout(timer);
-	}, [router, setCurrentUser]);
+	}, [setCurrentUser]);
 
 	return (
 		<>

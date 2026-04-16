@@ -1,17 +1,17 @@
 'use client';
 
 import { useStore } from "@/store";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { getRecipes } from "@/app/actions";
-import { getUser } from "@/app/actions";
 import { useState, useEffect } from "react";
 import RecipeCard from "@/components/RecipeCard";
 
 export default function Home() {
 
-	const currentUser = useStore(state => state.currentUser);
+	const { data: session } = useSession();
+	const firstname = session?.user?.firstname;
 	const [mostRecent, setMostRecent] = useState([]);
-
 
 	useEffect(() => {
 		getRecipes({
@@ -35,7 +35,7 @@ export default function Home() {
 				<section className="hero">
 					<div className="container">
 						<span className="hero__eyebrow">
-							Willkommen {currentUser && <span>{currentUser.firstname}</span>}
+							Willkommen {firstname && <span>{firstname}</span>}
 						</span>
 						<h1 className="hero__title">
 							Entdecke <em>schnelle</em> Rezepte<br />für Zwischendurch
@@ -43,7 +43,7 @@ export default function Home() {
 						<p className="hero__subtitle">
 							Einfach kochen, besser essen – mit unserer wachsenden Rezeptsammlung.
 						</p>
-						<a href="/rezepte" className="btn btn--primary">Alle Rezepte</a>
+						<Link href="/rezepte" className="btn btn--primary">Alle Rezepte</Link>
 					</div>
 				</section>
 				<ul style={{maxWidth:"500px", margin:"auto"}}>

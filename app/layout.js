@@ -7,6 +7,9 @@ import AdminNav from "../components/AdminNav";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -23,17 +26,23 @@ export const metadata = {
 	description: "Projektarbeit von Andreas Zipfel mit React und Next.js",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+
+	// Session serverseitig lesen – kein Re-Render, kein Client-Code nötig
+	const session = await getServerSession(authOptions);
+	const isLoggedIn = !!session?.user;
 
 	return (
-		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
 			<body className="flex flex-col min-h-screen"> {/* Flexbox für Sticky Footer */}
-				<Header isLoggedIn={true} />
+				<Providers>
+					<Header isLoggedIn={isLoggedIn} />
 
-				<main className="flex-grow"> {/* Nimmt den verfügbaren Platz ein */}
-					{children}
-				</main>
-				<Footer/>
+					<main className="flex-grow"> {/* Nimmt den verfügbaren Platz ein */}
+						{children}
+					</main>
+					<Footer/>
+				</Providers>
 			</body>
 		</html>
 	);
