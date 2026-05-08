@@ -1,40 +1,35 @@
-/* Globale CSS-Variablen */
+@import "tailwindcss";
+
+@theme {
+	/* Farben */
+	--color-primary: #c0392b;
+	--color-secondary: #2c1a0e;
+	--color-accent: #ffd166;
+	--color-text: #333333;
+	--color-text-light: #f8f8f8;
+	--color-bg-light: #fdfdfd;
+	--color-bg-dark: #2c3e50;
+
+	/* Radius */
+	--radius-card-sm: 8px;
+	--radius-card-md: 12px;
+
+	/* Schatten */
+	--shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+	--shadow-soft-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Kompatibilität: bestehende CSS-Variablen bleiben nutzbar */
 :root {
-	--primary-color: #c0392b;
-	/* Ein lebhaftes Rot */
-	--secondary-color: #2c1a0e;
-	/* Ein frisches Türkis */
-	--accent-color: #FFD166;
-	/* Ein warmer Gelbton */
-	--text-color: #333333;
-	--light-text-color: #f8f8f8;
-	--background-light: #fdfdfd;
-	--background-dark: #2c3e50;
-	/* Dunklerer Hintergrund für Footer/Header */
-	--border-radius-sm: 8px;
-	--border-radius-md: 12px;
-	--box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-	--box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: var(--font-geist-mono), monospace;
-	color: var(--primary-color);
-	margin-bottom: 0.3em;
-	margin-top:1em;
-}
-h1 {
-	margin-top:0
-}
-
-/* Sorgt dafür, dass der Hauptinhalt den verfügbaren Platz füllt */
-.flex-grow {
-	flex-grow: 1;
-	margin: auto;
-	min-width:80vw;
+	--primary-color: var(--color-primary);
+	--secondary-color: var(--color-secondary);
+	--accent-color: var(--color-accent);
+	--text-color: var(--color-text);
+	--light-text-color: var(--color-text-light);
+	--background-light: var(--color-bg-light);
+	--background-dark: var(--color-bg-dark);
+	--border-radius-sm: var(--radius-card-sm);
+	--border-radius-md: var(--radius-card-md);
+	--box-shadow-light: var(--shadow-soft);
+	--box-shadow-hover: var(--shadow-soft-hover);
 }

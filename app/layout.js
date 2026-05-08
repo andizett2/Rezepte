@@ -1,4 +1,4 @@
-import '@/styles/globals.css';
+//import '@/styles/globals.css';
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css"; // Importiere die globale CSS-Datei
@@ -34,11 +34,12 @@ export default async function RootLayout({ children }) {
 
 	return (
 		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
-			<body className="flex flex-col min-h-screen"> {/* Flexbox für Sticky Footer */}
+
+			<body className="flex flex-col min-h-screen bg-orange-50"> {/* Flexbox für Sticky Footer */}
 				<Providers>
 					<Header isLoggedIn={isLoggedIn} />
 
-					<main className="flex-grow"> {/* Nimmt den verfügbaren Platz ein */}
+					<main className="grow container mx-auto px-4 py-8"> {/* Nimmt den verfügbaren Platz ein */}
 						{children}
 					</main>
 					<Footer/>

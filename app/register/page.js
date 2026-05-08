@@ -60,7 +60,7 @@ const Register = () => {
 					<h1>Komm in die Küche</h1>
 					<form onSubmit={submitHandler}>
 						<div className="form-group">
-							<label htmlFor="firstname">Vorname</label>
+							<label htmlFor="firstname" className="after:content-['*']">Vorname</label>
 							<input
 								type="text"
 								id="firstname"

@@ -21,8 +21,10 @@ const Logoff = () => {
 
 	return (
 		<>
-			<h1>Du wurdest abgemeldet.</h1>
-			<p>Weiterleitung erfolgt in 2 Sekunden auf die <Link href="/">Startseite.</Link></p>
+			<div className="container mx-auto mb-10 max-w-4xl rounded-(--border-radius-md) bg-(--background-light) px-6 py-10 shadow-(--box-shadow-light)">
+				<h1>Du wurdest abgemeldet.</h1>
+				<p>Weiterleitung erfolgt in 2 Sekunden auf die <Link href="/">Startseite.</Link></p>
+			</div>
 		</>
 	);
 }

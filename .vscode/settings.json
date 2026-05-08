@@ -1,5 +1,6 @@
 {
 	"svn.ignoreMissingSvnWarning": true,
+	"css.lint.unknownAtRules": "ignore",
 	"workbench.colorCustomizations": {
 		"statusBar.background": "#e87722",
 		"statusBar.foreground": "#ffffff",
