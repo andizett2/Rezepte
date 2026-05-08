@@ -33,17 +33,18 @@ export default function MeineRezepte() {
 
 	return (
 		<>
-			<h1>Von Dir erstellte Rezepte</h1>
-			<ul>
-
-			{
-				myRecipes.map(recipe => (
-					<li key={recipe._id}>
-						<RecipeListItem recipe={recipe} user={currentUser} onDelete={handleRecipeDelete} />
-					</li>
-				))
-			}
-			</ul>
+			<div className="container mx-auto mb-10 max-w-4xl rounded-(--border-radius-md) bg-(--background-light) px-6 py-10 shadow-(--box-shadow-light)">
+				<h1>Von Dir erstellte Rezepte</h1>
+				<ul>
+					{
+						myRecipes.map(recipe => (
+							<li key={recipe._id}>
+								<RecipeListItem recipe={recipe} user={currentUser} onDelete={handleRecipeDelete} />
+							</li>
+						))
+					}
+				</ul>
+			</div>
 		</>
 	)
 }

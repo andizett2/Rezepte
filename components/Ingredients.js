@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getUnits, getUnit } from "@/lib/lookups";
+import { useState } from 'react';
+import { getUnit } from "@/lib/lookups";
 
 
-const Ingredients = ({ recipe = {}, units }) => {
+const Ingredients = ({ recipe = {} }) => {
 
-	const [ingredients, setIngredients] = useState(recipe.ingredients || []);
+	const ingredients = recipe.ingredients || [];
 	const [persons, setPersons] = useState(1);
 	const currentLocale = "de";
 
@@ -14,10 +14,6 @@ const Ingredients = ({ recipe = {}, units }) => {
 	const handlePersonsChange = (e) => {
 		setPersons(e.target.value * 1);
 	}
-
-	useEffect(() => {
-		setIngredients(recipe.ingredients || [])
-	}, [recipe]);
 
 	return (
 		<>

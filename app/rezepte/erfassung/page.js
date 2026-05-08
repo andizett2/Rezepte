@@ -9,6 +9,7 @@ import { useStore } from "@/store";
 import { getUnits } from "@/lib/lookups";
 import { useRouter } from 'next/navigation';
 import { uploadRecipeImage } from "@/app/actions";
+import Image from 'next/image';
 
 
 const RecipeForm = () => {
@@ -105,108 +106,104 @@ const RecipeForm = () => {
 
 	return (
 		<>
-			<h1>Dein neues Rezept</h1>
-			<form encType="multipart/form-data" onSubmit={handleSubmit(submitHandler)} noValidate={true}>
-				<div className="formrow">
-					<label htmlFor="image" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-						Bild (optional)
-					</label>
-					<input
-						type="file"
-						id="image"
-						accept="image/*"
-						{...register('image')}
-					/>
-					{ image_url && <img src={image_url} alt="" className="upload-preview" />}
-				</div>
-				<div className="required formrow">
-					<label htmlFor="title" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-						Bezeichnung
-					</label>
-					<input
-						type="text"
-						style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-						{...register('title', { required: 'Diese Angabe ist erforderlich ' })}
-					/>
+			<div className="container mx-auto mb-10 max-w-4xl rounded-(--border-radius-md) bg-(--background-light) px-6 py-10 shadow-(--box-shadow-light)">
+				<h1 className="mb-6 text-2xl font-bold">Dein neues Rezept</h1>
+				<form encType="multipart/form-data" onSubmit={handleSubmit(submitHandler)} noValidate={true}>
+					<div className="formrow mb-5">
+						<label htmlFor="image" className="mb-1 block font-bold">
+							Bild (optional)
+						</label>
+						<input
+							className="file-input block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition file:mr-4 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-slate-700 hover:file:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+							type="file"
+							id="image"
+							accept="image/*"
+							{...register('image')}
+						/>
+						{image_url && <Image src={image_url} alt="" className="upload-preview" width={150} height={150} />}
+					</div>
+					<div className="required formrow mb-5">
+						<label htmlFor="title" className="mb-1 block font-bold">
+							Bezeichnung
+						</label>
+						<input
+							type="text"
+							className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+							{...register('title', { required: 'Diese Angabe ist erforderlich ' })}
+						/>
 
-					{formState.errors.title && (
-						<span className="error">{formState.errors.title.message}</span>
-					)}
-				</div>
-				<div className="formrow">
-					<label htmlFor="description" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-						Beschreibung
-					</label>
-					<textarea
-						style={{ width: '100%', height: '15em', padding: '8px', boxSizing: 'border-box' }}
-						{...register('description')}
-					/>
-				</div>
+						{formState.errors.title && (
+							<span className="error">{formState.errors.title.message}</span>
+						)}
+					</div>
+					<div className="formrow mb-5">
+						<label htmlFor="description" className="mb-1 block font-bold">
+							Beschreibung
+						</label>
+						<textarea
+							className="h-[15em] w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+							{...register('description')}
+						/>
+					</div>
 
-				<div style={{ marginBottom: '20px' }}>
-					<label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-						Zutaten:
-					</label>
-					{ingredients.map((ingredient, index) => (
-						<div key={`ingredient-${index}`} style={{ marginBottom: '10px' }}>
-							<input
-								type="number"
-								value={ingredient.amount}
-								onChange={(e) => handleAmountChange(index, e.target.value)}
-								style={{ width: '15%', padding: '8px', boxSizing: 'border-box' }}
-							/>
-							<select
-								value={ingredient.unit}
-								onChange={(e) => handleUnitChange(index, e.target.value)}
-								style={{ width: '30%', padding: '8px', boxSizing: 'border-box' }}
+					<div className="mb-5">
+						<label className="mb-1 block font-bold">
+							Zutaten:
+						</label>
+						{ingredients.map((ingredient, index) => (
+							<div key={`ingredient-${index}`} className="mb-2.5">
+								<input
+									type="number"
+									value={ingredient.amount}
+									onChange={(e) => handleAmountChange(index, e.target.value)}
+									className="w-[15%] rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+								/>
+								<select
+									value={ingredient.unit}
+									onChange={(e) => handleUnitChange(index, e.target.value)}
+									className="w-[30%] rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
 
-							>
-								{
-									units.map((unit, ix) => <option key={unit.id} value={unit.id}>{unit.value}</option>)
-								}
-							</select>
-							<input
-								type="text"
-								value={ingredient.name}
-								onChange={(e) => handleIngredientChange(index, e.target.value)}
-								placeholder="Zutat eingeben..."
-								style={{ width: '55%', padding: '8px', boxSizing: 'border-box' }}
-							/>
-						</div>
-					))}
-				</div>
+								>
+									{
+										units.map((unit, ix) => <option key={unit.id} value={unit.id}>{unit.value}</option>)
+									}
+								</select>
+								<input
+									type="text"
+									value={ingredient.name}
+									onChange={(e) => handleIngredientChange(index, e.target.value)}
+									placeholder="Zutat eingeben..."
+									className="w-[55%] rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+								/>
+							</div>
+						))}
+					</div>
 
-				<div style={{ marginBottom: '20px' }}>
-					<label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-						Zubereitungsschritte:
-					</label>
-					{steps.map((step, index) => (
-						<div key={`step-${index}`} style={{ marginBottom: '10px' }}>
-							<input
-								type="text"
-								value={step}
-								onChange={(e) => handleStepChange(index, e.target.value)}
-								placeholder="Schritt eingeben..."
-								style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-							/>
-						</div>
-					))}
-				</div>
+					<div className="mb-5">
+						<label className="mb-1 block font-bold">
+							Zubereitungsschritte:
+						</label>
+						{steps.map((step, index) => (
+							<div key={`step-${index}`} className="mb-2.5">
+								<input
+									type="text"
+									value={step}
+									onChange={(e) => handleStepChange(index, e.target.value)}
+									placeholder="Schritt eingeben..."
+									className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+								/>
+							</div>
+						))}
+					</div>
 
-				<button
-					type="submit"
-					style={{
-						backgroundColor: '#4CAF50',
-						color: 'white',
-						padding: '10px 15px',
-						border: 'none',
-						borderRadius: '4px',
-						cursor: 'pointer',
-					}}
-				>
-					Rezept speichern
-				</button>
-			</form>
+					<button
+						className="btn cursor-pointer rounded bg-[#4CAF50] px-4 py-2.5 text-white"
+						type="submit"
+					>
+						Rezept speichern
+					</button>
+				</form>
+			</div>
 		</>
 	)
 }
