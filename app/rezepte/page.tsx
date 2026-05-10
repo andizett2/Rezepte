@@ -53,7 +53,6 @@ export default function Rezepte() {
 		if (debouncedSearchterm) {
 			fetchRecipesWithHeaders().then((result) => {
 				setRecipes(result);
-				console.log('debounced');
 			});
 		}
 	}, [debouncedSearchterm, fetchRecipesWithHeaders]);
@@ -74,7 +73,6 @@ export default function Rezepte() {
 		if (e.currentTarget.value === '') {
 			fetchRecipesWithHeaders().then((result) => {
 				setRecipes(result);
-				console.log(e.currentTarget.value, 'gesetzt');
 			});
 		}
 	};

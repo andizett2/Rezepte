@@ -31,7 +31,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 	// Session serverseitig lesen – kein Re-Render, kein Client-Code nötig.
 	const session = await getServerSession(authOptions);
 	const isLoggedIn = Boolean(session?.user);
-	console.log( session, isLoggedIn );
 
 	return (
 		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
