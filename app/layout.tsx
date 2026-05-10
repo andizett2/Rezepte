@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
 			<body className="flex min-h-screen flex-col bg-orange-50">
 				<Providers>
-					<Header isLoggedIn={isLoggedIn} />
+					<Header />
 					<main className="container mx-auto grow px-4 py-8">{children}</main>
 					<Footer />
 				</Providers>

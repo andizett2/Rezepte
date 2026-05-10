@@ -6,9 +6,8 @@ interface UserByEmailRouteProps {
 }
 
 export async function GET(_request: Request, { params }: UserByEmailRouteProps) {
-	const db = getRezept_db();
-
 	try {
+		const db = getRezept_db();
 		const { email } = await params;
 		const userDoc = await db.get(email);
 		return NextResponse.json(userDoc);

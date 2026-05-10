@@ -18,9 +18,8 @@ const normalizeAppUser = (value: unknown): AppUser => {
 };
 
 export async function GET() {
-	const db = getRezept_db();
-
 	try {
+		const db = getRezept_db();
 		const response = await db.view('users', 'all');
 		return NextResponse.json(response.rows.map((row) => normalizeAppUser(row.value)));
 	} catch (error) {
@@ -29,7 +28,6 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-	const db = getRezept_db();
 	const user = normalizeAppUser(await request.json());
 	const { firstname, lastname = '', email, password, isadmin = false, slogan = '' } = user;
 
@@ -46,6 +44,7 @@ export async function POST(request: NextRequest) {
 	};
 
 	try {
+		const db = getRezept_db();
 		const response = await db.insert(userDoc);
 		return NextResponse.json(response);
 	} catch (error) {
@@ -54,7 +53,6 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-	const db = getRezept_db();
 	const user = normalizeAppUser(await request.json());
 	const { firstname, lastname = '', email, password, isadmin = false, slogan = '' } = user;
 
@@ -71,6 +69,7 @@ export async function PUT(request: NextRequest) {
 	};
 
 	try {
+		const db = getRezept_db();
 		const response = await db.insert(userDoc);
 		return NextResponse.json(response);
 	} catch (error) {

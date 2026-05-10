@@ -46,6 +46,7 @@ const Login = () => {
 								type="email"
 								id="email"
 								name="email"
+								autoFocus
 								placeholder="deine@mail.de"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
@@ -58,7 +59,6 @@ const Login = () => {
 								type="password"
 								id="password"
 								name="password"
-								placeholder="••••••••"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
@@ -69,8 +69,8 @@ const Login = () => {
 							Loskochen!
 						</button>
 					</form>
-					<p>
-						Neu hier? <Link href="/register">Registrieren</Link>
+					<p className="mt-4 text-center text-sm text-gray-600">
+						Neu hier? <Link href="/register" className="text-blue-500 hover:underline">Registrieren</Link>
 					</p>
 				</div>
 			</div>

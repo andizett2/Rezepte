@@ -4,21 +4,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type MouseEvent } from 'react';
-import { useStore } from '@/store';
-
-interface HeaderProps {
-	isLoggedIn?: boolean;
-}
+import { useSession } from 'next-auth/react';
 
 interface NavLink {
 	href: string;
 	label: string;
 }
 
-export default function Header({ isLoggedIn }: HeaderProps) {
-	const currentUser = useStore((state) => state.currentUser);
+export default function Header() {
+	const { data: session, status } = useSession();
 	const pathname = usePathname();
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
+	const isLoggedIn = status === 'authenticated';
 
 	// Scrollen des Body sperren, wenn das mobile Menü offen ist.
 	useEffect(() => {
